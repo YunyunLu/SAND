@@ -7,9 +7,21 @@ ip link set dev eth4 address 02:cc:cc:cc:cc:04 group 10
 ip link set dev eth31 address 02:cc:cc:cc:cc:31 group 10
 
 # Config of Switches
-ip link add sw0 type bridge stp_state 1 priority 3001 vlan_filtering 0
-ip link set dev sw0 address 02:cc:cc:cc:cc:00
-ip link set group 10 master sw0 promisc on up
+ip link add swc2 type bridge stp_state 1 priority 3001 vlan_filtering 0
+ip link set dev swc2 address 02:cc:cc:cc:cc:00
+ip link set group 10 master swc2 promisc on up
 
-ip link set dev sw0 up
+# vlan -- allow all vlan 
+for i in 1 2 3 4 31
+do
+  bridge vlan add vid 2-4094 dev eth${i}
+done
+
+# allow dhcp arrange ip
+
+bridge vlan add vid 2-4094 untagged dev eth2
+bridge vlan add vid 2-4094 untagged dev eth3
+bridge vlan add vid 2-4094 untagged dev eth4
+
+ip link set dev swc2 up
 

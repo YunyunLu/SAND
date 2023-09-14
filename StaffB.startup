@@ -1,4 +1,6 @@
-ip link set dev eth0 address 02:ca:ca:ca:ca:02
+echo 20 > /proc/sys/net/ipv4/neigh/eth0/gc_stale_time
+
+ip link set up dev eth0
 dhclient eth0
 
 ip route add default via 172.0.6.1 dev eth0

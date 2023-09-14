@@ -7,9 +7,22 @@ ip link set dev eth31 address 02:cb:cb:cb:cb:31 group 10
 ip link set dev eth32 address 02:cb:cb:cb:cb:32 group 10
 
 # Config of Switches
-ip link add sw0 type bridge stp_state 1 priority 3001 vlan_filtering 0
-ip link set dev sw0 address 02:cb:cb:cb:cb:00
-ip link set group 10 master sw0 promisc on up
+ip link add sw1 type bridge stp_state 1 priority 3001 vlan_filtering 0
+ip link set dev sw1 address 02:cb:cb:cb:cb:00
+ip link set group 10 master sw1 promisc on up
 
-ip link set dev sw0 up
+# vlan eth1&eth2&eth3 staff1&staff2&staff3 vlan 22
+
+for i in 1 2 3
+do
+  bridge vlan add vid 22 pvid untagged dev eth${i} 
+done
+
+# associate all possible non-default vlans with the inter-switch ports 31 & 32
+for i in 31 32 
+do
+  bridge vlan add vid 2-4094 dev eth${i}
+done
+
+ip link set dev sw1 up
 
