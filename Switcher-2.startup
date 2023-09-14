@@ -1,0 +1,15 @@
+# Config of NICs
+ip link set dev eth1 address 02:cb:cb:cb:cb:01 group 10
+ip link set dev eth2 address 02:cb:cb:cb:cb:02 group 10
+ip link set dev eth3 address 02:cb:cb:cb:cb:03 group 10
+
+ip link set dev eth31 address 02:cb:cb:cb:cb:31 group 10
+ip link set dev eth32 address 02:cb:cb:cb:cb:32 group 10
+
+# Config of Switches
+ip link add sw0 type bridge stp_state 1 priority 3001 vlan_filtering 0
+ip link set dev sw0 address 02:cb:cb:cb:cb:00
+ip link set group 10 master sw0 promisc on up
+
+ip link set dev sw0 up
+

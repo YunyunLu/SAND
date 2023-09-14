@@ -12,11 +12,12 @@ ip link set up dev eth2
 # Subnets through External DMZ
 ip route add 10.0.1.0/24 via 192.0.0.2
 # Subnets through Router
+ip route add 10.0.0.0/28 via 10.0.254.2
 ip route add 10.0.2.0/24 via 10.0.254.2
 ip route add 10.0.3.0/24 via 10.0.254.2
 ip route add 10.0.4.0/24 via 10.0.254.2
 ip route add 10.0.5.0/24 via 10.0.254.2
-ip route add 10.0.6.0/24 via 10.0.254.2
+ip route add 172.0.0.0/20 via 10.0.254.2
 
 # Internet as the default gateway
 ip route add default via 137.205.157.254

@@ -1,0 +1,4 @@
+ip link set dev eth0 address 02:cb:cb:cb:cb:02
+dhclient eth0
+
+ip route add default via 172.0.6.1 dev eth0

@@ -29,8 +29,8 @@ Extranet-Zone-GW eth0 10.0.0.5/28
 Extranet-Zone-GW eth1 10.0.5.1/24
 Thirdparty eth0 10.0.5.2/24
 Enterprise-Zone-GW eth0 10.0.0.6/28
-Enterprise-Zone-GW eth1 10.0.6.1/20
-DHCP eth0 10.0.6.2/20
+Enterprise-Zone-GW eth1 172.0.6.1/20
+DHCP eth0 172.0.6.2/20
 Core-Switcher eth0 10.0.6.3/20
 Core-Switcher-2 eth0 10.0.6.4/20
 
