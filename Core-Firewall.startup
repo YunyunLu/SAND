@@ -109,6 +109,17 @@ iptables -A FORWARD -s 10.0.1.3 -j ACCEPT
 iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 3128 -j DNAT --to-destination 10.0.1.3:3128
 iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 3129 -j DNAT --to-destination 10.0.1.3:3129
 
+#Allow traffic with Management
+iptables -A FORWARD -p tcp -s 10.0.4.0/24 -d 10.0.1.0/24 -j ACCEPT
+iptables -A FORWARD -p tcp -s 10.0.1.0/24 -d 10.0.4.0/24 -j ACCEPT
+iptables -A FORWARD -p udp -s 10.0.4.0/24 -d 10.0.1.0/24 -j ACCEPT
+iptables -A FORWARD -p udp -s 10.0.1.0/24 -d 10.0.4.0/24 -j ACCEPT
+
+iptables -A FORWARD -s 10.0.0.4 -d 10.0.1.0/24 -j ACCEPT
+iptables -A FORWARD -s 10.0.1.0/24 -d 10.0.0.4 -j ACCEPT
+iptables -A FORWARD -s 10.0.0.4 -d 192.0.0.2 -j ACCEPT
+iptables -A FORWARD -s 192.0.0.2 -d 10.0.0.4 -j ACCEPT
+
 ######## MASQUERADE
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
@@ -121,4 +132,9 @@ iptables -A FORWARD -p icmp --icmp-type echo-request -s 172.0.6.0/20 -d 10.0.1.0
 iptables -A FORWARD -p icmp --icmp-type echo-reply -s 172.0.6.0/20 -d 10.0.1.0/24 -j ACCEPT
 iptables -A FORWARD -p icmp --icmp-type echo-request -s 10.0.1.0/24 -d 172.0.6.0/20 -j ACCEPT
 iptables -A FORWARD -p icmp --icmp-type echo-reply -s 10.0.1.0/24 -d 172.0.6.0/20 -j ACCEPT
+#Management
+iptables -A FORWARD -p icmp --icmp-type echo-request -s 10.0.4.0/24 -d 10.0.1.0/24 -j ACCEPT
+iptables -A FORWARD -p icmp --icmp-type echo-reply -s 10.0.4.0/24 -d 10.0.1.0/24 -j ACCEPT
+iptables -A FORWARD -p icmp --icmp-type echo-request -s 10.0.1.0/24 -d 10.0.4.0/24 -j ACCEPT
+iptables -A FORWARD -p icmp --icmp-type echo-reply -s 10.0.1.0/24 -d 10.0.4.0/24 -j ACCEPT
 

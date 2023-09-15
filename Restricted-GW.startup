@@ -24,6 +24,15 @@ iptables -A FORWARD -p udp --sport 389 -s 10.0.3.0/24 -d 10.0.2.0/24 -j ACCEPT
 iptables -A FORWARD -s 10.0.0.2 -d 10.0.0.3 -j ACCEPT
 iptables -A FORWARD -s 10.0.0.3 -d 10.0.0.2 -j ACCEPT
 
+#Allow traffic with Management Zone
+iptables -A FORWARD -p tcp -s 10.0.4.0/24 -d 10.0.3.0/24 -j ACCEPT
+iptables -A FORWARD -p tcp -s 10.0.3.0/24 -d 10.0.4.0/24 -j ACCEPT
+iptables -A FORWARD -p udp -s 10.0.4.0/24 -d 10.0.3.0/24 -j ACCEPT
+iptables -A FORWARD -p udp -s 10.0.3.0/24 -d 10.0.4.0/24 -j ACCEPT
+
+iptables -A FORWARD -s 10.0.0.4 -d 10.0.0.3 -j ACCEPT
+iptables -A FORWARD -s 10.0.0.3 -d 10.0.0.4 -j ACCEPT
+
 ######## MASQUERADE
 iptables -t nat -A POSTROUTING -s 10.0.3.1 -o eth0 -j MASQUERADE
 
@@ -32,5 +41,9 @@ iptables -A FORWARD -p icmp --icmp-type echo-request -s 10.0.3.0/24 -d 10.0.2.0/
 iptables -A FORWARD -p icmp --icmp-type echo-reply -s 10.0.3.0/24 -d 10.0.2.0/24 -j ACCEPT
 iptables -A FORWARD -p icmp --icmp-type echo-request -s 10.0.2.0/24 -d 10.0.3.0/24 -j ACCEPT
 iptables -A FORWARD -p icmp --icmp-type echo-reply -s 10.0.2.0/24 -d 10.0.3.0/24 -j ACCEPT
-
+#Management
+iptables -A FORWARD -p icmp --icmp-type echo-request -s 10.0.3.0/24 -d 10.0.4.0/24 -j ACCEPT
+iptables -A FORWARD -p icmp --icmp-type echo-reply -s 10.0.3.0/24 -d 10.0.4.0/24 -j ACCEPT
+iptables -A FORWARD -p icmp --icmp-type echo-request -s 10.0.4.0/24 -d 10.0.3.0/24 -j ACCEPT
+iptables -A FORWARD -p icmp --icmp-type echo-reply -s 10.0.4.0/24 -d 10.0.3.0/24 -j ACCEPT
 
